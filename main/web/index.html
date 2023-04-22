@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX请求</title>
+</head>
+<body>
+输入内容：<input type="text" id="username">
+<input type="button" value="确定" id="btn">
+<div id="div">
+    输出结果：
+</div>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        //绑定点击事件
+        document.getElementById("btn").onclick = function () {
+            //1.创建XHR对象 2.注册回调函数 3.开启通道 4.发送请求
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                console.log(xhr.readyState);
+                console.log(this.status);
+                if (xhr.readyState == 4 && this.status === 200) {
+                    var responseText = xhr.responseText;
+                    console.log(responseText);
+                    document.getElementById("div").innerHTML = responseText;
+                }
+            }
+            var username = document.getElementById("username").value
+            xhr.open("get", "/main_war_exploded/servlet01?username=" + username, true);
+            xhr.send();
+        }
+    }
+</script>
+</html>
